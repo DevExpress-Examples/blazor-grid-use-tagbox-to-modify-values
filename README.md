@@ -47,7 +47,7 @@ To filter column data using the DevExpress Blazor TagBox component, do the follo
 3. Handle the editor's [ValuesChanged](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2.ValuesChanged) event and set `context.FilterCriteria` to custom filter criteria (based on selected values).
 
 ```razor
-<DxGridDataColumn FieldName="SummaryString" >
+<DxGridDataColumn FieldName="Privileges" Caption="System Privileges" >
     <FilterRowCellTemplate>
         @{
             var items = TagBoxFilterRowUtils.GetValueByFunctionOperator(context.FilterCriteria, nameof(User.Privileges));

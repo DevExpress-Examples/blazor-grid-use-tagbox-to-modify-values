@@ -1,6 +1,4 @@
-﻿using static DxBlazorApplication1.Pages.Index;
-
-namespace DxBlazorApplication1.Data {
+﻿namespace DxBlazorApplication1.Data {
     public class DataService {
         public static List<User> GetUsers() {
             string[] sampleNames = {

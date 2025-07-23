@@ -50,13 +50,13 @@ To filter column data using the DevExpress Blazor TagBox component, do the follo
 <DxGridDataColumn FieldName="SummaryString" >
     <FilterRowCellTemplate>
         @{
-            var items = TagBoxFilterRowUtils.GetValueByFunctionOperator(context.FilterCriteria, nameof(WeatherForecast.Summary));
-        }   
+            var items = TagBoxFilterRowUtils.GetValueByFunctionOperator(context.FilterCriteria, nameof(User.Privileges));
+        }
         <DxTagBox TData="string"
                   TValue="string"
-                  Data="Summaries"
+                  Data="AvailablePrivileges"
                   Values="items"
-                  ValuesChanged="(newValues) => { context.FilterCriteria = TagBoxFilterRowUtils.CreateFilterCriteriaByValues(newValues, nameof(WeatherForecast.Summary)); }" />
+                  ValuesChanged="(newValues) => { context.FilterCriteria = TagBoxFilterRowUtils.CreateFilterCriteriaByValues(newValues, nameof(User.Privileges)); }" />
     </FilterRowCellTemplate>
 </DxGridDataColumn>
 ```

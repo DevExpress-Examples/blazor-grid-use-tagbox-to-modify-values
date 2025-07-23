@@ -1,36 +1,85 @@
 ﻿@page "/"
 
 @using DxBlazorApplication1.Data
-@inject WeatherForecastService ForecastService
+<div id="container">
+    <h2 class="grid-title">
+        Employee List
+    </h2>
 
-    <DxGrid Data="@forecasts"
+    <DxGrid Data="@Users"
+            KeyFieldName="Id"
             ShowFilterRow="true"
-            CssClass="mw-1100">
+            EditMode="GridEditMode.EditRow"
+            DataItemDeleting="@OnDataItemDeleting"
+            EditModelSaving="@OnEditModelSaving">
         <Columns>
-            <DxGridDataColumn Caption="Date" FieldName="Date"  />
-            <DxGridDataColumn Caption="Temperature" FieldName="TemperatureF"  />
-            <DxGridDataColumn FieldName="SummaryString" >
+            <DxGridCommandColumn NewButtonVisible="false" Width="160" />
+            <DxGridDataColumn FieldName="Id" Caption="ID" ReadOnly="true" Width="100" />
+            <DxGridDataColumn FieldName="FullName" Width="150" />
+            <DxGridDataColumn FieldName="Position" Width="150" />
+            <DxGridDataColumn FieldName="Privileges" Caption="System Privileges">
+                <CellDisplayTemplate Context="displayContext">
+                    @{
+                        var tags = (displayContext.Value as IEnumerable<string>) ?? Enumerable.Empty<string>();
+                        var tagSeparator = "; ";
+                        <div class="display-tag">
+                            <div class="display-tag-text">
+                                @foreach (var tag in tags) {
+                                    @tag @tagSeparator
+                                }
+                          </div>
+                        </div>
+                    }
+                </CellDisplayTemplate>
+                <CellEditTemplate Context="editContext">
+                    <DxTagBox Data="@AvailablePrivileges"
+                              TData="string"
+                              TValue="string"
+                              Values="@(((User)editContext.DataItem).Privileges)"
+                              ValuesExpression="@(() => ((User)editContext.DataItem).Privileges)"
+                              ValuesChanged="@((newValues) => OnPrivilegesChanged((User)editContext.EditModel, newValues))"
+                              NullText="Assign privileges..." />
+                </CellEditTemplate>
                 <FilterRowCellTemplate>
                     @{
-                        var items = TagBoxFilterRowUtils.GetValueByFunctionOperator(context.FilterCriteria, nameof(WeatherForecast.Summary));
+                        var items = TagBoxFilterRowUtils.GetValueByFunctionOperator(context.FilterCriteria, nameof(User.Privileges));
                     }
                     <DxTagBox TData="string"
                               TValue="string"
-                              Data="Summaries"
+                              Data="AvailablePrivileges"
                               Values="items"
-                              ValuesChanged="(newValues) => { context.FilterCriteria = TagBoxFilterRowUtils.CreateFilterCriteriaByValues(newValues, nameof(WeatherForecast.Summary)); }" />
+                              ValuesChanged="(newValues) => { context.FilterCriteria = TagBoxFilterRowUtils.CreateFilterCriteriaByValues(newValues, nameof(User.Privileges)); }" />
                 </FilterRowCellTemplate>
             </DxGridDataColumn>
         </Columns>
     </DxGrid>
+</div>
 
 @code {
-    private WeatherForecast[] forecasts;
+    private List<User> Users { get; set; } = new();
+    private IEnumerable<string> AvailablePrivileges { get; set; } = new[] {
+        "Manage Users",
+        "Edit Content",
+        "Access Reports",
+        "Modify Settings",
+        "Approve Requests",
+        "Audit Logs"
+    };
 
-    List<string> Summaries = new List<string>();
+    protected override void OnInitialized() {
+        Users = DataService.GetUsers();
+    }
 
-    protected override async Task OnInitializedAsync() {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-        Summaries = WeatherForecastService.Summaries.ToList();
+    private void OnPrivilegesChanged(User user, IEnumerable<string> newValues) {
+        user.Privileges = newValues.ToList();
+    }
+    async Task OnEditModelSaving(GridEditModelSavingEventArgs e) {
+        e.CopyChangesToDataItem();
+    }
+
+    private void OnDataItemDeleting(GridDataItemDeletingEventArgs args) {
+        if (args.DataItem is User user) {
+            Users.Remove(user);
+        }
     }
 }

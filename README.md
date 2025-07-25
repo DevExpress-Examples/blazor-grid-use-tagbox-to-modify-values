@@ -3,19 +3,21 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-# Blazor Grid - Edit/filter column data using TagBox
+# Blazor Grid - Use TagBox as Column Editor
 
-This example uses our [TagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) UI component to edit/filter column data in the DevExpress Blazor Grid.
+This example integrates our [TagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor into a column within the DevExpress Blazor Grid UI component. During editing operations, this TagBox allows you to assign multiple privileges to a user. In the filter row, the TagBox filters data by multiple privileges.
 
 ![image](image.png)
 
 ## Implementation Details
 
+Our Blazor Grid does not generate TagBox editors for data columns. You can use templates to display TagBoxes in edited/filter row cells.
+
 ### Edit Data
 
-To use the DevExpress Blazor TagBox component for data editing, you must:
+To display DevExpress Blazor TagBox components in edited cells, you must:
 
-1. Choose an [EditMode](https://docs.devexpress.com/Blazor/403454/components/grid/editing-and-validation) and enable data editing in the DevExpress Blazor Grid (in this example, the Grid operates in [EditRow](https://docs.devexpress.com/Blazor/404758/components/grid/editing-and-validation/edit-modes/edit-row) mode).
+1. Enable data editing in the DevExpress Blazor Grid component (using the [EditRow](https://docs.devexpress.com/Blazor/404758/components/grid/editing-and-validation/edit-modes/edit-row)/[EditCell](https://docs.devexpress.com/Blazor/404756/components/grid/editing-and-validation/edit-modes/edit-cell) mode).
 2. Place the [DxTagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor within the [DxGridDataColumn.CellEditTemplate](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.CellEditTemplate).
 3. Handle the editor's [ValuesChanged](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2.ValuesChanged) event and assign selected values to `context.EditModel`.
 
@@ -40,7 +42,7 @@ private void OnPrivilegesChanged(User user, IEnumerable<string> newValues) {
 
 ### Filter Data
 
-To filter column data using the DevExpress Blazor TagBox component, do the following:
+To display the DevExpress Blazor TagBox component in a filter row cell, you must:
 
 1. Enable the [ShowFilterRow](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowFilterRow) property to activate the integrated DevExpress Grid [Filter Row](https://docs.devexpress.com/Blazor/404325/components/grid/data-shaping/filter-data/filter-row).
 2. Place the [DxTagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor within the [DxGridDataColumn.FilterRowCellTemplate](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.FilterRowCellTemplate).

@@ -24,13 +24,16 @@ To display DevExpress Blazor TagBox components in edited cells, you must:
 ```razor
 <DxGridDataColumn FieldName="Privileges" Caption="System Privileges">
     <CellEditTemplate Context="editContext">
-        <DxTagBox Data="@AvailablePrivileges"
-                  TData="string"
-                  TValue="string"
-                  Values="@(((User)editContext.DataItem).Privileges)"
-                  ValuesExpression="@(() => ((User)editContext.DataItem).Privileges)"
-                  ValuesChanged="@((newValues) => OnPrivilegesChanged((User)editContext.EditModel, newValues))"
-                  NullText="Assign privileges..." />
+        @{
+            var user = editContext.EditModel as User;
+            <DxTagBox Data="@AvailablePrivileges"
+                      TData="string"
+                      TValue="string"
+                      Values="@(user!.Privileges)"
+                      ValuesExpression="@(() => user.Privileges)"
+                      ValuesChanged="@((newValues) => OnPrivilegesChanged(user, newValues))"
+                      NullText="Assign privileges..." />
+        }
     </CellEditTemplate>
 </DxGridDataColumn>
 ```

@@ -3,22 +3,22 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-# Blazor Grid - Use TagBox as Column Editor
+# Blazor Grid - Use TagBox as a Column Editor
 
-This example integrates our [TagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor into a column within the DevExpress Blazor Grid UI component. During editing operations, this TagBox allows you to assign multiple privileges to a user. In the filter row, the TagBox filters data by multiple privileges.
+This example integrates our [TagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor into a column within the DevExpress Blazor Grid UI component. The TagBox editor allows you to select multiple values when you edit a cell value or use the filter row. 
 
 ![image](image.png)
 
 ## Implementation Details
 
-Our Blazor Grid does not generate TagBox editors for data columns. You can use templates to display TagBoxes in edited/filter row cells.
+Specify data cell and filter row templates to integrate the TagBox component into the Data Grid.
 
-### Edit Data
+### Cell Editor Template
 
 To display DevExpress Blazor TagBox components in edited cells, you must:
 
-1. Enable data editing in the DevExpress Blazor Grid component (using the [EditRow](https://docs.devexpress.com/Blazor/404758/components/grid/editing-and-validation/edit-modes/edit-row)/[EditCell](https://docs.devexpress.com/Blazor/404756/components/grid/editing-and-validation/edit-modes/edit-cell) mode).
-2. Place the [DxTagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor within the [DxGridDataColumn.CellEditTemplate](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.CellEditTemplate).
+1. Activate data editing in the DevExpress Blazor Grid component ([EditRow](https://docs.devexpress.com/Blazor/404758/components/grid/editing-and-validation/edit-modes/edit-row) or [EditCell](https://docs.devexpress.com/Blazor/404756/components/grid/editing-and-validation/edit-modes/edit-cell) mode).
+2. Place a [DxTagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor into the [DxGridDataColumn.CellEditTemplate](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.CellEditTemplate).
 3. Handle the editor's [ValuesChanged](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2.ValuesChanged) event and assign selected values to `context.EditModel`.
 
 ```razor
@@ -43,12 +43,12 @@ private void OnPrivilegesChanged(User user, IEnumerable<string> newValues) {
 }
 ```
 
-### Filter Data
+### Filter Row Template
 
 To display the DevExpress Blazor TagBox component in a filter row cell, you must:
 
-1. Enable the [ShowFilterRow](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowFilterRow) property to activate the integrated DevExpress Grid [Filter Row](https://docs.devexpress.com/Blazor/404325/components/grid/data-shaping/filter-data/filter-row).
-2. Place the [DxTagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor within the [DxGridDataColumn.FilterRowCellTemplate](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.FilterRowCellTemplate).
+1. Activate the [ShowFilterRow](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowFilterRow) property to display the integrated DevExpress Grid [Filter Row](https://docs.devexpress.com/Blazor/404325/components/grid/data-shaping/filter-data/filter-row).
+2. Place a [DxTagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor into the [DxGridDataColumn.FilterRowCellTemplate](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.FilterRowCellTemplate).
 3. Handle the editor's [ValuesChanged](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2.ValuesChanged) event and set `context.FilterCriteria` to custom filter criteria (based on selected values).
 
 ```razor

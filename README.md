@@ -5,17 +5,17 @@
 <!-- default badges end -->
 # Blazor Grid - Use TagBox as a Column Editor
 
-This example integrates our [TagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor into a column within the DevExpress Blazor Grid UI component. The TagBox editor allows you to select multiple values when you edit a cell value or use the filter row. 
+This example uses our Blazor [TagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) Editor to modify column values (within the DevExpress Blazor Grid UI component). As you can see, our TagBox Editor allows users to select multiple values when editing cell values or specify multiple search criteria within our Grid’s Filter Row.
 
 ![image](image.png)
 
 ## Implementation Details
 
-Specify data cell and filter row templates to integrate the TagBox component into the Data Grid.
+To add our TagBox component to your Grid, you must specify appropriate data cell and/or Filter Row templates.
 
 ### Cell Editor Template
 
-To display DevExpress Blazor TagBox components in edited cells, you must:
+To display the DevExpress Blazor TagBox within edited cells, you must:
 
 1. Activate data editing in the DevExpress Blazor Grid component ([EditRow](https://docs.devexpress.com/Blazor/404758/components/grid/editing-and-validation/edit-modes/edit-row) or [EditCell](https://docs.devexpress.com/Blazor/404756/components/grid/editing-and-validation/edit-modes/edit-cell) mode).
 2. Place a [DxTagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor into the [DxGridDataColumn.CellEditTemplate](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.CellEditTemplate).
@@ -45,7 +45,7 @@ private void OnPrivilegesChanged(User user, IEnumerable<string> newValues) {
 
 ### Filter Row Template
 
-To display the DevExpress Blazor TagBox component in a filter row cell, you must:
+To display the DevExpress Blazor TagBox component in a Filter Row cell, you must:
 
 1. Activate the [ShowFilterRow](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowFilterRow) property to display the integrated DevExpress Grid [Filter Row](https://docs.devexpress.com/Blazor/404325/components/grid/data-shaping/filter-data/filter-row).
 2. Place a [DxTagBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxTagBox-2) editor into the [DxGridDataColumn.FilterRowCellTemplate](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.FilterRowCellTemplate).
